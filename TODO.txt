@@ -1,0 +1,2 @@
+Use the test branch to test all the implementation related changes.
+You can also add different branches based on what you are doing i.e. Login page, Registration page etc.
