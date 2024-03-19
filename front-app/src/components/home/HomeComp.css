@@ -1,0 +1,21 @@
+:root {
+    --color: #c97302;
+    --bgColor: #210202;
+}
+
+.home-comp {
+    background-color: var(--bgColor);
+    background-image: none;
+}
+
+.home-box {
+    border: var(--color) solid 5px;
+    padding: 50px 50px 50px 50px;
+    margin-bottom: 10px;
+}
+
+.list-transparent > li {
+    color: var(--color);
+    background-color: transparent;
+    border-color: var(--color);
+}

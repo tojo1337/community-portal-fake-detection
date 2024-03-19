@@ -1,14 +1,11 @@
 import React, { createContext, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
-import './static/css/index.css'
 
-import { Login } from './components/Login.jsx'
-import { Register } from './components/Register.jsx'
-import { UserDashboard } from './components/UserDashboard.jsx'
-import { AdminDashboard } from './components/AdminDashboard.jsx'
-import { ModDashboard } from './components/ModDashboard.jsx'
-import { ErrorPage } from './components/ErrorPage.jsx'
+import { Login } from "./components/login/Login.jsx"
+import { Register } from "./components/registration/Register.jsx"
+import { DashBoard } from "./components/dashboard/DashBoard.jsx"
+import { NotFound } from "./components/404/NotFound.jsx"
 
 import {
   createBrowserRouter,
@@ -20,7 +17,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <ErrorPage />
+    errorElement: <NotFound />
   },
   {
     path: "/login",
@@ -31,17 +28,9 @@ const router = createBrowserRouter([
     element: <Register />
   },
   {
-    path: "/moderator",
-    element: <AuthGuard><ModDashboard /></AuthGuard>,
+    path: "/dashboard",
+    element: <DashBoard />
   },
-  {
-    path: "/user",
-    element: <AuthGuard><UserDashboard /></AuthGuard>,
-  },
-  {
-    path: "/admin",
-    element: <AuthGuard><AdminDashboard /></AuthGuard>
-  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

@@ -1,0 +1,18 @@
+:root {
+    --color: #c97302;
+    --bgColor: #210202;
+}
+
+.about-comp {
+    background-color: var(--bgColor);
+    background-image: none;
+}
+
+.about-box {
+    border: var(--color) solid 5px;
+    padding: 50px 50px 50px 50px;
+}
+
+.item-header {
+    margin-bottom: 30px;
+}

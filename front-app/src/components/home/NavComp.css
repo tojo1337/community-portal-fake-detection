@@ -1,0 +1,72 @@
+:root {
+    --color: #c97302;
+    --bgColor: #210202;
+}
+
+.nav-comp {
+    color: var(--color);
+}
+
+.sample-nav {
+    background-color: rgba(255,255,255,0) !important;
+}
+
+.my-nav-link {
+    color: var(--color);
+}
+
+.my-nav-link:hover {
+    color: black;
+    background-color: var(--color);
+}
+
+.btn-sample {
+    color: var(--color);
+    border-color: var(--color);
+    border-radius: 0%;
+}
+
+.btn-sample:hover {
+    color: black;
+    background-color: var(--color);
+    border-color: var(--color);
+    border-radius: 0%;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+
+#btn-items > button {
+    margin-right: 10px;
+}
+
+.side-bar {
+    position: fixed;
+    right: 0;
+}
+
+.dialogue-box {
+    height: 82vh;
+    width: 50vh;
+    margin-right: 10px;
+    border: var(--color) solid 2px;
+    padding: 50px 50px 50px 50px;
+    background-color: var(--bgColor);
+}
+
+.dialogue-box > h4 {
+    top: 0;
+}
+
+.dialogue-box > .chat-entry {
+    height: 50vh;
+    overflow-y: scroll;
+}
+
+.dialogue-box > .news-entry {
+    height: 50vh;
+    overflow-y: scroll;
+}

@@ -1,0 +1,98 @@
+:root {
+    --textColor: whitesmoke;
+    --chocolateCode: #490206;
+    --boxBorderColor: #1086e8;
+}
+
+.register-comp {
+    color: var(--textColor) !important;
+    background-image: url("../../assets/bg.jpg");
+    background-size: 1400px 700px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    /* font-family: "GFS Didot" !important; */
+    font-family: 'Times New Roman', serif !important;
+}
+
+.register-box {
+    border-color: var(--chocolateCode);
+    border-style: solid;
+    border-radius: 0%;
+    padding: 50px 80px 50px 80px;
+    background-color: var(--chocolateCode);
+    z-index: 2;
+}
+
+.login-btn {
+    width: 100%;
+    height: 45px;
+}
+
+.input-prop {
+    color: var(--textColor) !important;
+    border-radius: 0% !important;
+    background-color: var(--chocolateCode) !important;
+}
+
+.tube-light {
+    animation: flash 4s infinite;
+}
+
+.tube-light:hover {
+    animation: lit 4s;
+    box-shadow: 0px 0px 100px 0px rgba(247, 113, 52, 0.73);
+}
+
+/* box-shadow: 0px 0px 30px 0px rgba(247, 113, 52, 0.73); */
+
+@keyframes flash {
+    0% {
+        box-shadow: 0px 0px 100px 0px rgba(247, 113, 52, 0.73);
+    }
+    4% {
+        box-shadow: 0px 0px 0px 0px rgba(247, 113, 52, 0.73);
+    }
+    8% {
+        box-shadow: 0px 0px 100px 0px rgba(247, 113, 52, 0.73);
+    }
+    20% {
+        box-shadow: 0px 0px 0px 0px rgba(247, 113, 52, 0.73);
+    }
+    24% {
+        box-shadow: 0px 0px 100px 0px rgba(247, 113, 52, 0.73);
+    }
+    56% {
+        box-shadow: 0px 0px 0px 0px rgba(247, 113, 52, 0.73);
+    }
+    60% {
+        box-shadow: 0px 0px 100px 0px rgba(247, 113, 52, 0.73);
+    }
+    80% {
+        box-shadow: 0px 0px 0px 0px rgba(247, 113, 52, 0.73);
+    }
+    84% {
+        box-shadow: 0px 0px 100px 0px rgba(247, 113, 52, 0.73);
+    }
+    96% {
+        box-shadow: 0px 0px 0px 0px rgba(247, 113, 52, 0.73);
+    }
+    100% {
+        box-shadow: 0px 0px 100px 0px rgba(247, 113, 52, 0.73);
+    }
+}
+
+@keyframes lit {
+    0% {
+        box-shadow: 0px 0px 100px 0px rgba(247, 113, 52, 0.73);
+    }
+    4% {
+        box-shadow: 0px 0px 0px 0px rgba(247, 113, 52, 0.73);
+    }
+    50% {
+        box-shadow: 0px 0px 100px 0px rgba(247, 113, 52, 0.73);
+    }
+    to {
+        box-shadow: 0px 0px 100px 0px rgba(247, 113, 52, 0.73);
+    }
+}

@@ -1,0 +1,45 @@
+:root {
+    --nfColor: black;
+    --nfBgColor: whitesmoke;
+}
+
+.not-found {
+    color: var(--nfColor);
+    background-color: var(--nfBgColor);
+    height: 100vh;
+}
+
+.nf-box {
+    height: 400px;
+    width: 400px;
+    border: solid var(--nfColor) 1px;
+}
+
+.nf-item-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.nf-item {
+    margin-left: 30px;
+    margin-top: 40px;
+    margin-right: 10px;
+}
+
+.nf-item-header {
+    width: 230px;
+    border: 1px solid var(--nfColor);
+    padding-left: 25px;
+    margin-bottom: 20px;
+}
+
+.nf-item-contain {
+    border: var(--nfColor) 1px solid;
+    margin-bottom: 10px;
+}
+
+.nf-custom-btn {
+    border-radius: 0%;
+}

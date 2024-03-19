@@ -1,0 +1,69 @@
+:root {
+    /* --color: #a86002; */
+    --color: #c97302;
+    --bgColor: #210202;
+    --headerText: #00FFFF;
+}
+
+body {
+    color: var(--color);
+    background-color: var(--bgColor);
+}
+
+.parallax {
+    height: 100%;
+    width: 100%;
+}
+
+#bg-img {
+    background-size: auto 1000px;
+    background-image: url("./assets/bg-2.jpg");
+    background-repeat: no-repeat;
+}
+
+#tree {
+    background-image: url("./assets/forest.png");
+    background-size: 250vh 70vh;
+    background-repeat: no-repeat;
+    background-position: bottom;
+}
+
+#cloud1 {
+    background-image: url("./assets/cloud.png");
+    background-size: 100px 100px;
+    background-repeat: no-repeat;
+    background-position: left;
+    opacity: 0.5;
+}
+
+#cloud2 {
+    background-image: url("./assets/cloud.png");
+    background-size: 300px 300px;
+    background-repeat: no-repeat;
+    background-position: right;
+    opacity: 0.5;
+}
+
+#cloud3 {
+    background-image: url("./assets/cloud.png");
+    background-size: 300px 300px;
+    background-repeat: no-repeat;
+    background-position: top center;
+    opacity: 0.5;
+}
+
+#site-header {
+    color: var(--headerText);
+    padding-top: 150px;
+}
+
+.site-header-box {
+    height: auto;
+    width: 350px;
+    padding-left: 10px;
+}
+
+.site-header-border {
+    width: 350px;
+    color: var(--headerText) !important;
+}

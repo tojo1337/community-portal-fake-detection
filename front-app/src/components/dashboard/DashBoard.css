@@ -1,0 +1,50 @@
+:root {
+    --dbColor: #f8f8f2;
+    --boxColor: #44475a;
+    --dbBgColor: #282a36;
+    --commentColor: #6272a4;
+    --green: #50fa7b;
+    --cyan: #8be9fd;
+    --black: #000000;
+}
+
+.dashboard {
+    color: var(--dbColor);
+    background-color: var(--dbBgColor);
+}
+
+.section {
+    height: 100vh;
+    padding: 50px 50px 50px 0px;
+}
+
+.dashboard-box {
+    height: 80vh;
+    width: 80vw;
+    border: var(--commentColor) solid 1px;
+    background-color: var(--boxColor);
+}
+
+#floatingTextarea {
+    height: 30vh;
+}
+
+.dashboard-form > button {
+    width: 100%;
+}
+
+.posts {
+    height: 70vh;
+    overflow: scroll;
+}
+
+.post {
+    border: var(--green) solid 1px;
+    margin: 10px 10px 10px 10px;
+    padding: 10px 10px 10px 10px;
+}
+
+.post:hover {
+    color: var(--black);
+    background-color: var(--cyan);
+}
