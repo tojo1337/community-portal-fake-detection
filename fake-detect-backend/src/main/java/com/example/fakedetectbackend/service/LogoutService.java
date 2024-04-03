@@ -1,6 +1,6 @@
 package com.example.fakedetectbackend.service;
 
-import com.example.fakedetectbackend.dto.jwt.JwtToken;
+import com.example.fakedetectbackend.model.jwt.JwtToken;
 import com.example.fakedetectbackend.repo.TokenRepo;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

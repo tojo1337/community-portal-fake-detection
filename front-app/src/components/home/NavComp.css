@@ -70,3 +70,7 @@
     height: 50vh;
     overflow-y: scroll;
 }
+
+.nav-mar {
+    margin-right: 2vw;
+}

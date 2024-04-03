@@ -1,8 +1,8 @@
 package com.example.fakedetectbackend.service;
 
-import com.example.fakedetectbackend.dto.auth.AuthRequest;
-import com.example.fakedetectbackend.dto.user.MyUser;
-import com.example.fakedetectbackend.dto.user.MyUserDetails;
+import com.example.fakedetectbackend.model.auth.AuthRequest;
+import com.example.fakedetectbackend.model.user.MyUser;
+import com.example.fakedetectbackend.model.user.MyUserDetails;
 import com.example.fakedetectbackend.repo.MyUserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -47,6 +47,7 @@ public class MyUserDetailsService implements UserDetailsService {
         }else {
             MyUser user = new MyUser();
             user.setName(authRequest.getUser());
+            user.setEmail(authRequest.getEmail());
             user.setPassword(getPasswordEncoder().encode(authRequest.getPass()));
             repo.save(user);
             return "User saved";

@@ -1,6 +1,6 @@
 package com.example.fakedetectbackend.service;
-import com.example.fakedetectbackend.dto.jwt.JwtToken;
-import com.example.fakedetectbackend.dto.user.MyUser;
+import com.example.fakedetectbackend.model.jwt.JwtToken;
+import com.example.fakedetectbackend.model.user.MyUser;
 import com.example.fakedetectbackend.repo.MyUserRepo;
 import com.example.fakedetectbackend.repo.TokenRepo;
 import org.springframework.beans.factory.annotation.Autowired;

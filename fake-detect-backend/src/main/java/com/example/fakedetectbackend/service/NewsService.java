@@ -1,9 +1,9 @@
 package com.example.fakedetectbackend.service;
 
-import com.example.fakedetectbackend.dto.enums.Rate;
-import com.example.fakedetectbackend.dto.news.NewsBody;
-import com.example.fakedetectbackend.dto.news.NewsBodyDto;
-import com.example.fakedetectbackend.dto.user.MyUser;
+import com.example.fakedetectbackend.model.enums.Rate;
+import com.example.fakedetectbackend.model.news.NewsBody;
+import com.example.fakedetectbackend.model.news.NewsBodyDto;
+import com.example.fakedetectbackend.model.user.MyUser;
 import com.example.fakedetectbackend.repo.MyUserRepo;
 import com.example.fakedetectbackend.repo.NewsRepo;
 import lombok.SneakyThrows;
@@ -66,25 +66,30 @@ public class NewsService {
     @SneakyThrows
     public Rate totalRateOfNews(NewsBody body){
         List<NewsBodyDto> newsList = newsRepo.findAll();
+        int numberOfUsersToRate = 0;
+        int additionOfAllRate = 0;
         for(NewsBodyDto news:newsList){
             if(news.getTitle().equals(body.getTitle())){
                 List<MyUser> userList = news.getUser();
-                int numberOfUsersToRate = userList.size();
-                int additionOfAllRate = 0;
+                numberOfUsersToRate = userList.size();
+                additionOfAllRate = 0;
                 for(MyUser user:userList){
                     for(NewsBodyDto newsDto: user.getRatings()){
                         additionOfAllRate += newsDto.getRatings().getRating();
                     }
                 }
-                int averageRate = Math.round((additionOfAllRate/numberOfUsersToRate)*5);
-                // Do the Int to Enum conversion in here
-                Rate rt = Rate.valueOf(Integer.toString(averageRate));
-                return rt;
             }
         }
-        return Rate.ZERO_STAR;
+        if(numberOfUsersToRate>0){
+            int averageRate = Math.round((additionOfAllRate/numberOfUsersToRate)*5);
+            // Do the Int to Enum conversion in here
+            Rate rt = Rate.valueOf(Integer.toString(averageRate));
+            return rt;
+        }else {
+            return Rate.ZERO_STAR;
+        }
     }
-    @SneakyThrows
+
     public boolean saveNews(NewsBody newsBody){
         Calendar cal = Calendar.getInstance();
         List<NewsBodyDto> newsList = newsRepo.findAll();
@@ -103,7 +108,6 @@ public class NewsService {
     }
 
     // This method only allows us to get news of at least one day old
-    @SneakyThrows
     public List<NewsBodyDto> getAllNews(){
         Calendar cal = Calendar.getInstance();
         List<NewsBodyDto> allNews = newsRepo.findAll();
@@ -125,7 +129,6 @@ public class NewsService {
     }
 
     //This method allows us to fetch the current news that are not supposed to have any ratings
-    @SneakyThrows
     public List<NewsBodyDto> getUnvotedNews(){
         Calendar cal = Calendar.getInstance();
         List<NewsBodyDto> allNews = newsRepo.findAll();
@@ -154,5 +157,15 @@ public class NewsService {
             }
         }
         return index;
+    }
+
+
+    public NewsBody getNewsById(int id){
+        Optional<NewsBodyDto> returnNews = newsRepo.findById(id);
+        NewsBodyDto temp = returnNews.get();
+        return NewsBody.builder()
+                .title(temp.getTitle())
+                .messageBody(temp.getMessageBody())
+                .build();
     }
 }

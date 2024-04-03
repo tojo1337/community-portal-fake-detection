@@ -1,6 +1,6 @@
 package com.example.fakedetectbackend.repo;
 
-import com.example.fakedetectbackend.dto.jwt.JwtToken;
+import com.example.fakedetectbackend.model.jwt.JwtToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

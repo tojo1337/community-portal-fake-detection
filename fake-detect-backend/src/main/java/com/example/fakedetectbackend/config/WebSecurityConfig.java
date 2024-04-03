@@ -5,6 +5,7 @@ import com.example.fakedetectbackend.service.LogoutService;
 import com.example.fakedetectbackend.service.MyUserDetailsService;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,6 +25,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -34,30 +36,25 @@ public class WebSecurityConfig {
     private MyUserDetailsService userDetailsService;
     @Autowired
     private LogoutService logoutService;
+    @Value("${remote-host-name}")
+    private String remoteUrl;
 
     // Add the apis that are not going to be protected
     private final String[] overlook = {
             "/api/v1/sign-in",
             "/api/v1/refresh",
             "/api/v1/token",
+            "/api/v1/news-list",
+            "/api/v1/get-news-rate/*",
+            "/api/v1",
     };
-
-    @Bean
-    public CorsConfigurationSource corsConfig() {
-        CorsConfiguration cors = new CorsConfiguration();
-        cors.setAllowedMethods(Arrays.asList("*"));
-        cors.setAllowedOrigins(Arrays.asList("http://localhost:3000/**"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**",cors);
-        return source;
-    }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.cors(cors->{
-            cors.configurationSource(corsConfig());
-        }).csrf(withDefaults()).authorizeHttpRequests(req->{
-            req.requestMatchers(overlook).permitAll();
-            req.anyRequest().authenticated();
+        http.cors(withDefaults()).csrf(withDefaults()).authorizeHttpRequests(req->{
+            req.requestMatchers(overlook)
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated();
         }).sessionManagement(session->{
             session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         }).authenticationProvider(authProvider())

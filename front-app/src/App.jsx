@@ -7,8 +7,40 @@ import { NavComp } from './components/home/NavComp'
 import { HomeComp } from './components/home/HomeComp'
 import { AboutUs } from './components/home/AboutComp'
 import { ContactUs } from './components/home/ContactUs'
+import { useEffect, useState } from "react"
+import axios from "axios"
+import { fetchAllNews } from "./static/Api"
+import { useDispatch, useSelector } from "react-redux"
+import { setNews } from "./services/VotedNews"
+import { login } from "./services/AuthGuard"
 
 const App = () => {
+    const [arr,setArr] = useState([]);
+    
+    const votedNews = useSelector((state)=>state.votedNews.value);
+    const token = useSelector(state=>state.authGuard.bearerToken);
+
+    const dispatch = useDispatch();
+
+    useEffect(()=>{
+        console.log(votedNews);
+
+        axios.get(fetchAllNews)
+        .then(data=>{  
+            // This is to add persistance in login
+            let token = window.localStorage.getItem("bearer");
+            if(token!==null){
+                dispatch(login(token));
+            }
+
+            // This is to save the news array
+            dispatch(setNews(data));
+        })
+        .catch(err=>{
+            console.error(err);
+        })
+    },[]);
+
     return (
         <Parallax pages={6}>
             {/* <ParallaxLayer offset={0} sticky={{start:0,end:3}}> */}
