@@ -57,4 +57,15 @@ public class MyUserDetailsService implements UserDetailsService {
     public PasswordEncoder getPasswordEncoder(){
         return new BCryptPasswordEncoder();
     }
+    // Adding a method to find username from email
+    public String findUsernameFromEmail(String email){
+        List<MyUser> li = repo.findAll();
+        String username = null;
+        for(MyUser user:li){
+            if(user.getEmail().equals(email)){
+                username = user.getName();
+            }
+        }
+        return username;
+    }
 }

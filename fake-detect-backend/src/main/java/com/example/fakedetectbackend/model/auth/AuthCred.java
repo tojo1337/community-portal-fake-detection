@@ -8,6 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthCred {
-    private String user;
+    private String email;
     private String pass;
 }

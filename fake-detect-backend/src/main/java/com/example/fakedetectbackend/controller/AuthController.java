@@ -42,7 +42,9 @@ public class AuthController {
     @PostMapping("/token")
     public AuthResponce genToken(@RequestBody AuthCred authRequest){
         log.info("getToken method invoked");
-        Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUser(),authRequest.getPass()));
+        String username = userDetailsService.findUsernameFromEmail(authRequest.getEmail());
+        String password = authRequest.getPass();
+        Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username,password));
         if(auth.isAuthenticated()){
             log.info("Authentication credentials matched");
             UserDetails userDetails = (UserDetails) auth.getPrincipal();
