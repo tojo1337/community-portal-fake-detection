@@ -1,3 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+.dashboard {
+    @apply bg-blue-900 text-gray-200 h-screen w-screen
+}
+
+.sample-text-area {
+    @apply h-48
+}
+
+.dashboard-button {
+    width: 100%;
+}

@@ -11,13 +11,13 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import { fetchAllNews } from "./static/Api"
 import { useDispatch, useSelector } from "react-redux"
-import { setNews } from "./services/VotedNews"
+import { setNews } from "./services/News"
 import { login } from "./services/AuthGuard"
 
 const App = () => {
     const [arr,setArr] = useState([]);
     
-    const votedNews = useSelector((state)=>state.votedNews.value);
+    const votedNews = useSelector((state)=>state.news.value);
     const token = useSelector(state=>state.authGuard.bearerToken);
 
     const dispatch = useDispatch();

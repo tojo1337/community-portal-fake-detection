@@ -9,6 +9,7 @@ import { DashBoard } from "./components/dashboard/DashBoard.jsx"
 import { NotFound } from "./components/404/NotFound.jsx"
 import { News } from "./components/news/News.jsx"
 import { ReadNews } from "./components/read-news/ReadNews.jsx"
+import { AdminPanel } from './components/admin/AdminPanel.jsx'
 
 import {
   createBrowserRouter,
@@ -23,7 +24,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Provider store={Store}><App /></Provider>,
-    // errorElement: <NotFound />
+    errorElement: <NotFound />
   },
   {
     path: "/login",
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
   {
     path: "/news/:newsId",
     element: <Provider store={Store}><ReadNews /></Provider>
+  },
+  {
+    path: "/admin",
+    element: <Provider store={Store}><AdminPanel /></Provider>
   }
 ]);
 

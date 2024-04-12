@@ -1,3 +1,4 @@
 DesignFiles/**
 ng-app/**
 back-app/**
+fake-detect-backend/src/main/resources/application.properties

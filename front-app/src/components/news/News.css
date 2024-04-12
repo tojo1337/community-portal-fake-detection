@@ -1,34 +1,15 @@
-:root {
-  --newsBgColor: whitesmoke;
-  --newsItemColor: white;
-  --newsItemHover: gray;
-  --newsItemsDark: #2C2C2B;
+.news-container {
+  @apply bg-slate-800 text-white h-screen w-screen;
 }
 
-.paginate {
-  width: 100vw;
-  height: 100vh;
-  background-color: var(--newsBgColor);
-  overflow: hidden;
+.news-block {
+  @apply overflow-scroll p-2;
 }
 
-.news-nav {
-  color: var(--newsItemColor);
-  background-color: var(--newsItemsDark);
+.news-card {
+  @apply border-solid border-2 border-cyan-900 p-5 rounded-xl bg-slate-700;
 }
 
-.news-item {
-  color: black;
-  height: 6.5vh;
-  width: 80vw;
-  background-color: var(--newsItemColor);
-  margin: 5px 5px 5px 5px;
-  padding-left: 30px;
-  padding-right: 30px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
-}
-
-.news-item:hover {
-  color: var(--newsItemColor);
-  background-color: var(--newsItemHover);
+.news-link {
+  @apply text-white no-underline hover:underline;
 }

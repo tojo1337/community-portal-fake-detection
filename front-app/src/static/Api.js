@@ -17,9 +17,15 @@ const refresh = baseUrl+"refresh";
 
 const logout = baseUrl+"logout";
 
+const isAdmid = baseUrl+"is-admin";
+
 const globalChatRoom = "/topic/chat";
 
 const globalChatSend = "/app/message";
+
+const delUser = baseUrl+"del-user/";
+
+const delNews = baseUrl+"del-news/";
 
 const wsUrl = "http://localhost:8080/websocket";
 
@@ -33,5 +39,8 @@ export {
     logout,
     globalChatRoom,
     globalChatSend,
-    wsUrl
+    wsUrl,
+    isAdmid,
+    delUser,
+    delNews
 }

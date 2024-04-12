@@ -20,7 +20,11 @@ const Register = () => {
         })
         .then(data=>{
             // Add redirect after registration
-            navigate("/login");
+            if(data.data==="Username already exists"){
+                alert("Username already exists");
+            }else {
+                navigate("/login");
+            }
         })
         .catch(err=>{
             console.error(err)

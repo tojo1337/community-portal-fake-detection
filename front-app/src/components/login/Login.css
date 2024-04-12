@@ -7,7 +7,7 @@
 .login-comp {
     color: var(--textCoorScheme) !important;
     background-image: url("../../assets/bwm_0.jpg");
-    background-size: 1400px 700px;
+    background-size: 100vw 100vh;
 }
 
 .box{

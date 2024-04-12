@@ -1,0 +1,11 @@
+.admin-panel {
+    @apply bg-slate-800 text-gray-300 h-screen w-screen;
+}
+
+.admin-block {
+    @apply overflow-scroll p-2;
+}
+
+.admin-card {
+    @apply border-solid border-2 border-cyan-900 p-5 rounded-xl bg-slate-700 flex justify-between;
+}

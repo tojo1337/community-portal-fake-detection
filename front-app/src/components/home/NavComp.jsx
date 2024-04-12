@@ -144,16 +144,16 @@ const NavComp = () => {
                         <div className="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm">
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0 flex flex-row">
                                 <li className="nav-item nav-mar">
-                                    <a className="nav-link my-nav-link" aria-current="page" href="/">Home</a>
+                                    <a className="nav-link my-nav-link p-2" aria-current="page" href="/">Home</a>
                                 </li>
                                 <li className="nav-item nav-mar">
-                                    <a className="nav-link my-nav-link" href="#">News</a>
+                                    <a className="nav-link my-nav-link p-2" href="#">News</a>
                                 </li>
                                 <li className="nav-item nav-mar">
-                                    <a className="nav-link my-nav-link" href="#">Video</a>
+                                    <a className="nav-link my-nav-link p-2" href="#">Video</a>
                                 </li>
                                 <li className="nav-item nav-mar">
-                                    <a className="nav-link my-nav-link" href="#">Images</a>
+                                    <a className="nav-link my-nav-link p-2" href="#">Images</a>
                                 </li>
                             </ul>
                             <span className="w-[50vw]"></span>

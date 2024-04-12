@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import VotedNewsReducer from "./VotedNews";
 import AuthGuardReducer from "./AuthGuard";
+import NewsReducer from "./News";
 
 export default configureStore({
     reducer:{
-        votedNews: VotedNewsReducer,
+        news: NewsReducer,
         authGuard: AuthGuardReducer,
     }
 });
