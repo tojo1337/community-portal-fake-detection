@@ -2,59 +2,86 @@ import { useParams } from "react-router-dom"
 import "./ReadNews.css"
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { newsRate } from "../../static/Api";
+import { newsRate,voteForNews } from "../../static/Api";
 import { useSelector } from "react-redux";
 import Select from "react-select";
 
 const ReadNews = () => {
     const { newsId } = useParams();
-    const newsList = useSelector(state => state.news.value);
-    const [scoreVal, setScoreVal] = useState({});
+
+    const [scoreVal, setScoreVal] = useState();
     const [news, setNews] = useState({});
     const [rate, setRate] = useState(null);
 
     // Checks if the user is logged in
     const isLoggedIn = useSelector((state) => state.authGuard.isAuthenticated);
     const token = useSelector((state) => state.authGuard.bearerToken);
+    const newsList = useSelector((state) => state.news.value);
+    const email = useSelector((state) => state.authGuard.user);
 
     // There will be the rating options in here
     const options = [
-        { label: "Five star", value: 5 },
-        { label: "Four star", value: 4 },
-        { label: "Three star", value: 3 },
-        { label: "Two star", value: 2 },
-        { label: "One star", value: 1 }
+        { label: "Five star", value: "FIVE_STAR" },
+        { label: "Four star", value: "FOUR_STAR" },
+        { label: "Three star", value: "THREE_STAR" },
+        { label: "Two star", value: "TWO_STAR" },
+        { label: "One star", value: "ONE_STAR" }
+    ]
+
+    const score_values = [
+        { label: "FIVE_STAR", value: 5 },
+        { label: "FOUR_STAR", value: 4 },
+        { label: "THREE_STAR", value: 3 },
+        { label: "TWO_STAR", value: 2 },
+        { label: "ONE_STAR", value: 1 },
+        { label: "ZERO_STAR", value: 0 }
     ]
 
     useEffect(() => {
-        let arr = newsList;
-        for (let news in arr) {
-            if (news.id === newsId) {
-                setNews(news);
+        let arr = [...newsList];
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i].id == newsId) {
+                setNews(arr[i]);
             }
         }
         axios.get(newsRate + newsId)
-            .then(data => setScoreVal(data))
+            .then(data => {
+                for (let opt of score_values) {
+                    if (opt.label === data.data.value) {
+                        console.log(data.data);
+                        setScoreVal(opt.value);
+                    }
+                }
+            })
             .catch(err => console.err(err));
     }, []);
-
-    function handleSubmit(e) {
-        console.log("Rating submitted");
-        console.log(rate);
-        // Add a section to submit the ratings on the server
-    }
 
     const VotingModule = () => {
         const newsVote = (e) => {
             e.preventDefault();
+            // Add a section to submit the ratings on the server
+            let payload = {
+                title: news.title,
+                messageBody: news.messageBody,
+                ratings: rate.value
+            };
+
+            console.log(payload);
+
+            axios.post(voteForNews, payload, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token.data
+                }
+            }).catch(err => console.error(err));
         }
 
         if (isLoggedIn) {
             return (
                 <div className="card-item">
-                    <form onSubmit={handleSubmit} className="flex flex-col" method="post">
+                    <form onSubmit={newsVote} className="flex flex-col">
                         <span className="flex m-4">
-                            <label for="cars">Choose a rate: </label>
+                            <label htmlFor="cars">Choose a rate: </label>
                             <Select
                                 value={rate}
                                 onChange={setRate}
@@ -92,11 +119,11 @@ const ReadNews = () => {
                     </div>
                     <hr />
                     <div className="card-item">
-                        <p>{news.newsBody}</p>
+                        <p>{news.messageBody}</p>
                     </div>
                     <hr />
                     <div className="card-item">
-                        News ratings : {scoreVal.value}
+                        News ratings : {scoreVal}
                     </div>
                     <hr />
                     <VotingModule />

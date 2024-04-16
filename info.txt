@@ -16,3 +16,5 @@ Consider defining a bean of type 'com.example.fakedetectbackend.service.LogoutSe
 
 
 Process finished with exit code 0
+
+JWT expired at 2023-10-28T16:04:44Z. Current time: 2024-04-13T18:50:42Z, a difference of 14525158892 milliseconds.  Allowed clock skew: 0 milliseconds.

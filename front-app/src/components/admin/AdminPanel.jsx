@@ -3,7 +3,7 @@ import "./AdminPanel.css";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { delNews, delUser, isAdmid } from "../../static/Api";
+import { delNews, delUser, isAdmid, userList } from "../../static/Api";
 import { setNews } from "../../services/News";
 
 const AdminPanel = () => {
@@ -14,57 +14,62 @@ const AdminPanel = () => {
 
     const newsList = useSelector(state => state.news.value);
     const bearer = useSelector(state => state.authGuard.bearerToken);
+    const adminStat = useSelector(state=> state.authGuard.admin);
 
     const navigate = useNavigate();
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (bearer.length === 0) {
+        if(adminStat===false){
             navigate("/");
-        } else {
-            isUserAdmin = false;
-            axios.get(isAdmid)
-                .then((data) => {
-                    isUserAdmin = data.isAdmin;
-                })
-                .catch(err => {
-                    console.error(err)
-                });
-            if(!isUserAdmin){
-                navigate("/");
-            }
-            let arr = [...newsList];
-            setNewsArr(arr);
         }
+        let newsItems = [...newsList];
+        setNewsArr(newsItems);
+        fillUserList(bearer.data);
     }, []);
 
-    const userDelete = (e,id)=>{
+    const fillUserList = async (tok)=> {
+        await axios.get(userList, {
+            headers: {
+                "Authorization": "Bearer "+tok
+            }
+        }).then((data)=>{
+            let userList = [...data.data];
+            console.log(userList);
+            setUserArr(userList);
+        }).catch((err)=>{
+            console.error(err);
+        });
+    }
+
+    const userDelete = (e, id) => {
         let arr = [...userArr];
         let temp = [];
-        for(let i=0;i<arr.length;i++){
-            if(arr[i].id===id){
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i].id === id) {
                 continue;
-            }else {
+            } else {
                 temp.push(arr[i]);
             }
         }
+        console.log(delUser+id);
         setUserArr(temp);
-        axios.get(delUser+id).catch(err=>console.error(err));
+        axios.get(delUser+id,{headers:{"Authorization":"Bearer "+bearer.data}}).catch(err => console.error(err));
     }
 
-    const newsDelete = (e,id)=>{
+    const newsDelete = (e, id) => {
         let arr = [...newsArr];
         let temp = [];
-        for(let i=0;i<arr.length;i++){
-            if(arr[i].id===id){
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i].id === id) {
                 continue;
-            }else {
+            } else {
                 temp.push(arr[i]);
             }
         }
         setNewsArr(temp);
-        axios.get(delNews+id).catch(err=>console.error(err));
+        axios.get(delNews + id,{headers:{"Authorization":"Bearer "+bearer.data}}).catch(err => console.error(err));
         dispatch(setNews(temp));
     }
 
@@ -79,22 +84,22 @@ const AdminPanel = () => {
                 </div>
             )
         } else {
-            let listItem = arr.map((data,index) => {
+            let listItem = arr.map((data, index) => {
                 return (
-                    <li key={index}>
+                    <li key={index} className="list-none pb-1">
                         <div className="admin-card">
                             <div className="admin-item">
                                 {data.id}. {data.title}
                             </div>
                             <div className="admin-item">
-                                <button className="btn btn-outline-danger text-white" onClick={(e)=>{newsDelete(e,data.id)}}>remove news</button>
+                                <button className="btn btn-outline-danger text-white" onClick={(e) => { newsDelete(e, data.id) }}>remove news</button>
                             </div>
                         </div>
                     </li>
                 )
             });
             return (
-                <ul>{listItem}</ul>
+                <ul className="p-0">{listItem}</ul>
             )
         }
     }
@@ -110,22 +115,22 @@ const AdminPanel = () => {
                 </div>
             )
         } else {
-            let retUser = arr.map((data,index) => {
+            let retUser = arr.map((data, index) => {
                 return (
-                    <li key={index}>
+                    <li key={index} className="list-none pb-1" >
                         <div className="admin-card">
                             <div className="admin-item">
                                 {data.id}. {data.email}
                             </div>
                             <div className="admin-item">
-                                <button className="btn btn-outline-danger text-white" onClick={(e)=>{delUser(e,data.id)}}>remove user</button>
+                                <button className="btn btn-outline-danger text-white" onClick={(e) => { userDelete(e, data.id) }}>remove user</button>
                             </div>
                         </div>
                     </li>
                 )
             });
             return (
-                <ul>{retUser}</ul>
+                <ul className="p-0">{retUser}</ul>
             )
         }
     }
@@ -142,12 +147,12 @@ const AdminPanel = () => {
 
     return (
         <div className="admin-panel">
-            <ul class="nav nav-underline pl-2">
-                <li class="nav-item">
-                    <button class="nav-link hover:text-gray-200" onClick={showUser}>Users</button>
+            <ul className="nav nav-underline pl-2">
+                <li className="nav-item">
+                    <button className="nav-link hover:text-gray-200" onClick={showUser}>Users</button>
                 </li>
-                <li class="nav-item">
-                    <button class="nav-link hover:text-gray-200" onClick={showNews}>News</button>
+                <li className="nav-item">
+                    <button className="nav-link hover:text-gray-200" onClick={showNews}>News</button>
                 </li>
             </ul>
             <hr />

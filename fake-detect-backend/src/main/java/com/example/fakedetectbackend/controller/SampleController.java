@@ -19,4 +19,8 @@ public class SampleController {
                 HttpStatus.OK
         );
     }
+    @GetMapping("admin-map")
+    public ResponseEntity<Sample> adminMapper(){
+        return new ResponseEntity<>(new Sample("Hello world here"),HttpStatus.OK);
+    }
 }

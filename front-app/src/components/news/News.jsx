@@ -17,7 +17,7 @@ const News = () => {
 
     let listData = temp.map((data, index) => {
       return (
-        <li key={index}>
+        <li key={index} className='list-none pb-1'>
           <div className="news-card">
             <h5>
               <a className='news-link' href={"/news/" + data.id}>{data.title}</a>
@@ -26,6 +26,7 @@ const News = () => {
         </li>
       )
     });
+
 
     if (listData.length === 0) {
       return (
@@ -36,7 +37,9 @@ const News = () => {
         </div>
       )
     } else {
-      <ul>{listData}</ul>
+      return(
+        <ul className='p-0'>{listData}</ul>
+      )
     }
   }
 

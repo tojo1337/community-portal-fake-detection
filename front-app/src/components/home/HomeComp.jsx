@@ -14,12 +14,12 @@ const HomeComp = () => {
                                     <h4>Detection schemes</h4>
                                 </div>
                                 <div className="item-list">
-                                    <ul class="list-group list-group-flush list-transparent">
-                                        <li class="list-group-item">Natural Language Processing (NLP) Techniques</li>
-                                        <li class="list-group-item">Source Credibility Analysis</li>
-                                        <li class="list-group-item">Fact-Checking Services Integration</li>
-                                        <li class="list-group-item">Social Media Analysis</li>
-                                        <li class="list-group-item">Deep Learning Models</li>
+                                    <ul className="list-group list-group-flush list-transparent">
+                                        <li className="list-group-item">Natural Language Processing (NLP) Techniques</li>
+                                        <li className="list-group-item">Source Credibility Analysis</li>
+                                        <li className="list-group-item">Fact-Checking Services Integration</li>
+                                        <li className="list-group-item">Social Media Analysis</li>
+                                        <li className="list-group-item">Deep Learning Models</li>
                                         <li className="list-group-item">Metadata Analysis</li>
                                         <li className="list-group-item">Cross-Referencing Multiple Sources</li>
                                         <li className="list-group-item">User Behavior Analysis</li>

@@ -10,6 +10,7 @@ import { NotFound } from "./components/404/NotFound.jsx"
 import { News } from "./components/news/News.jsx"
 import { ReadNews } from "./components/read-news/ReadNews.jsx"
 import { AdminPanel } from './components/admin/AdminPanel.jsx'
+import { Logout } from './components/logout/Logout.jsx'
 
 import {
   createBrowserRouter,
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: <Provider store={Store}><AdminPanel /></Provider>
+  },
+  {
+    path: "/logout",
+    element: <Provider store={Store}><Logout /></Provider>
   }
 ]);
 

@@ -1,6 +1,7 @@
 package com.example.fakedetectbackend.config;
 
 import com.example.fakedetectbackend.filter.JwtTokenFilter;
+import com.example.fakedetectbackend.model.enums.Role;
 import com.example.fakedetectbackend.service.LogoutService;
 import com.example.fakedetectbackend.service.MyUserDetailsService;
 import lombok.SneakyThrows;
@@ -47,12 +48,32 @@ public class WebSecurityConfig {
             "/api/v1/news-list",
             "/api/v1/get-news-rate/*",
             "/api/v1",
+            "/websocket",
+    };
+    private final String[] adminRequired = {
+            "/api/v1/del-user/*",
+            "/api/v1/del-news/*",
+            "/api/v1/admin-map"
     };
     @Bean
+    public CorsConfigurationSource corsConfigSource(){
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(List.of("*"));
+        config.setAllowedMethods(List.of("*"));
+        config.setAllowedHeaders(List.of("*"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**",config);
+        return source;
+    }
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf->csrf.disable()).authorizeHttpRequests(req->{
+        http.csrf(csrf->csrf.disable())
+                .cors(cors->cors.configurationSource(corsConfigSource()))
+                .authorizeHttpRequests(req->{
             req.requestMatchers(overlook)
                     .permitAll()
+                    .requestMatchers(adminRequired)
+                    .hasAnyAuthority(Role.ADMIN.toString())
                     .anyRequest()
                     .authenticated();
         }).sessionManagement(session->{

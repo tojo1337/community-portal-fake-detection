@@ -81,9 +81,16 @@ public class NewsService {
             }
         }
         if(numberOfUsersToRate>0){
-            int averageRate = Math.round((additionOfAllRate/numberOfUsersToRate)*5);
+            int averageRate = Math.round(additionOfAllRate/numberOfUsersToRate);
             // Do the Int to Enum conversion in here
-            Rate rt = Rate.valueOf(Integer.toString(averageRate));
+            // Rate rt = Rate.valueOf(Integer.toString(averageRate));
+            log.info(Integer.toString(averageRate));
+            Rate rt = null;
+            for(Rate val: Rate.values()){
+                if(val.getRating()==averageRate){
+                    rt = val;
+                }
+            }
             return rt;
         }else {
             return Rate.ZERO_STAR;
@@ -109,26 +116,13 @@ public class NewsService {
 
     // This method only allows us to get news of at least one day old
     public List<NewsBodyDto> getAllNews(){
-        Calendar cal = Calendar.getInstance();
-        List<NewsBodyDto> allNews = newsRepo.findAll();
-        List<NewsBodyDto> retrievedNews = new LinkedList<>();
-
-        //Adding a way to calculate the date difference
-        Date today = cal.getTime();
-        cal.setTime(today);
-        cal.add(Calendar.DAY_OF_YEAR,-1);
-        Date yesterday = cal.getTime();
-
-        for(NewsBodyDto news:allNews){
-            if(news.getTimeStamp().before(yesterday)){
-                retrievedNews.add(news);
-            }
-        }
-
+        List<NewsBodyDto> retrievedNews = newsRepo.findAll();
         return retrievedNews;
     }
 
     //This method allows us to fetch the current news that are not supposed to have any ratings
+
+    /*
     public List<NewsBodyDto> getUnvotedNews(){
         Calendar cal = Calendar.getInstance();
         List<NewsBodyDto> allNews = newsRepo.findAll();
@@ -147,6 +141,8 @@ public class NewsService {
 
         return unvotedList;
     }
+    */
+
     public int getNewsId(NewsBody news){
         List<NewsBodyDto> list = newsRepo.findAll();
         int index = -1;
@@ -167,5 +163,16 @@ public class NewsService {
                 .title(temp.getTitle())
                 .messageBody(temp.getMessageBody())
                 .build();
+    }
+
+    public boolean delNewsService(int newsId){
+        Optional<NewsBodyDto> news = newsRepo.findById(newsId);
+        if(news.isEmpty()){
+            return false;
+        }else {
+            NewsBodyDto getNews = news.get();
+            newsRepo.delete(getNews);
+            return true;
+        }
     }
 }

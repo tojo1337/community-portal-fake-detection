@@ -9,7 +9,7 @@ import { AboutUs } from './components/home/AboutComp'
 import { ContactUs } from './components/home/ContactUs'
 import { useEffect, useState } from "react"
 import axios from "axios"
-import { fetchAllNews } from "./static/Api"
+import { fetchAllNews, newsRate } from "./static/Api"
 import { useDispatch, useSelector } from "react-redux"
 import { setNews } from "./services/News"
 import { login } from "./services/AuthGuard"
@@ -23,7 +23,7 @@ const App = () => {
     const dispatch = useDispatch();
 
     useEffect(()=>{
-        console.log(votedNews);
+        // console.log(votedNews);
 
         axios.get(fetchAllNews)
         .then(data=>{  
@@ -34,7 +34,10 @@ const App = () => {
             }
 
             // This is to save the news array
-            dispatch(setNews(data));
+            let newsArr = [...data.data];
+            if(newsArr.length>0){
+                dispatch(setNews(newsArr));
+            }
         })
         .catch(err=>{
             console.error(err);
@@ -66,7 +69,7 @@ const App = () => {
                 <div className="container" id="site-header">
                     <div className="d-flex flex-column justify-content-center align-items-center">
                         <h3>The TruthBallot</h3>
-                        <hr class="border border-primary border-3 opacity-75 site-header-border"></hr>
+                        <hr className="border border-primary border-3 opacity-75 site-header-border"></hr>
                         <div className="site-header-box">
                             <p>
                                 Facts Speak Louder than Opinions! <br />

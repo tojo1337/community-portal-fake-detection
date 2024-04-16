@@ -16,6 +16,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+
 @Log
 @RestController
 @RequestMapping("/api/v1/")
@@ -30,10 +32,6 @@ public class NewsController {
     @GetMapping("news-list")
     public List<NewsBodyDto> getAllNews(){
         return newsService.getAllNews();
-    }
-    @GetMapping("latest-news")
-    public List<NewsBodyDto> getLatestNews(){
-        return newsService.getUnvotedNews();
     }
     @PostMapping("new-news")
     public ResponseEntity<Sample> saveNewNews(@RequestBody NewsBody news) {
@@ -51,9 +49,10 @@ public class NewsController {
         }
     }
     @PostMapping("rate-news")
-    public ResponseEntity<Sample> rateNews(@RequestHeader("Authorization") String authHeader, @RequestBody NewsBody newsBody){
+    public ResponseEntity<Sample> rateNews(@RequestHeader(name="Authorization") String authHeader, @RequestBody NewsBody newsBody){
         String jwtToken = authHeader.substring(7);
         String user = jwtService.extractUsername(jwtToken);
+        log.info(user);
         UserDetails userDetails = userDetailsService.loadUserByUsername(user);
         if(newsService.saveRating(userDetails,newsBody,newsService.getNewsId(newsBody))){
             return new ResponseEntity<>(
@@ -67,8 +66,8 @@ public class NewsController {
             );
         }
     }
-    @GetMapping("get-news-rate/{rate}")
-    public ResponseEntity<NewsRatings> newsRatingsQuery(@RequestParam int newsId){
+    @GetMapping("get-news-rate/{newsId}")
+    public ResponseEntity<NewsRatings> newsRatingsQuery(@PathVariable int newsId){
         NewsBody news = newsService.getNewsById(newsId);
         Rate rate = newsService.totalRateOfNews(news);
 
@@ -81,5 +80,14 @@ public class NewsController {
                         .build(),
                 HttpStatus.OK
         );
+    }
+
+    @GetMapping("del-news/{newsId}")
+    public ResponseEntity<HttpStatus> deleteNews(@PathVariable int newsId){
+        if(newsService.delNewsService(newsId)){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }

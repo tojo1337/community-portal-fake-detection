@@ -20,6 +20,7 @@ public class NewsBodyDto {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String title;
+    @Column(length = 1000)
     private String messageBody;
     private Date timeStamp;
     private Rate ratings;

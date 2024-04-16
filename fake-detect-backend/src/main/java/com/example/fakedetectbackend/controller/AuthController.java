@@ -4,17 +4,23 @@ import com.example.fakedetectbackend.model.auth.AuthCred;
 import com.example.fakedetectbackend.model.auth.AuthRequest;
 import com.example.fakedetectbackend.model.auth.AuthResponce;
 import com.example.fakedetectbackend.model.jwt.TokenRequest;
+import com.example.fakedetectbackend.model.others.Sample;
+import com.example.fakedetectbackend.model.user.MyUser;
 import com.example.fakedetectbackend.service.AuthService;
 import com.example.fakedetectbackend.service.JwtService;
 import com.example.fakedetectbackend.service.MyUserDetailsService;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Log
 @RestController
@@ -70,5 +76,25 @@ public class AuthController {
         }else {
             return AuthResponce.builder().data("The token is not valid").build();
         }
+    }
+    @GetMapping("/del-user/{userId}")
+    public ResponseEntity<HttpStatus> delUser(@PathVariable int userId){
+        if(userDetailsService.delUserReq(userId)){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+    @PostMapping("/is-admin")
+    public ResponseEntity<Sample> isUserAdmin(@RequestBody TokenRequest tokenRequest){
+        if(userDetailsService.isUserAdmin(tokenRequest.getToken())){
+            return new ResponseEntity<>(new Sample("Admin"),HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(new Sample("Not Admin"),HttpStatus.OK);
+        }
+    }
+    @GetMapping("/user-list")
+    public ResponseEntity<List<MyUser>> getAllUsers(){
+        return new ResponseEntity<>(userDetailsService.getAllNonAdminUsers(),HttpStatus.OK);
     }
 }

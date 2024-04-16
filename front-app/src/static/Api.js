@@ -2,8 +2,6 @@ const baseUrl = "http://localhost:8080/api/v1/";
 
 const fetchAllNews = baseUrl+"news-list";
 
-const latestNews = baseUrl+"latest-news";
-
 // Need to add an id at the end like /api/v1/get-news-rate/{id}
 const newsRate = baseUrl+"get-news-rate/";
 
@@ -27,11 +25,16 @@ const delUser = baseUrl+"del-user/";
 
 const delNews = baseUrl+"del-news/";
 
+const newNews = baseUrl+"new-news";
+
+const userList = baseUrl+"user-list";
+
+const voteForNews = baseUrl+"rate-news";
+
 const wsUrl = "http://localhost:8080/websocket";
 
 export {
     fetchAllNews,
-    latestNews,
     newsRate,
     signIn,
     token,
@@ -42,5 +45,8 @@ export {
     wsUrl,
     isAdmid,
     delUser,
-    delNews
+    delNews,
+    newNews,
+    userList,
+    voteForNews
 }

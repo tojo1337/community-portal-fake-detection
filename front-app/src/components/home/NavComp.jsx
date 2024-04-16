@@ -42,11 +42,11 @@ const NavComp = () => {
     const onMessageSend = (evt)=>{
         //Use stompClient.send(url,{},messageBody) to send the data
         evt.preventDefault();
-        evt.preventDefault();
         const form = evt.target;
         const formData = new FormData(form);
         const formJson = Object.fromEntries(formData.entries());
-        if(user===null||user===undefined){
+        let sendData = null;
+        if(userName===null||userName===undefined){
             let jsonData = {
                 user: userName,
                 message: formJson.message
@@ -57,7 +57,7 @@ const NavComp = () => {
                 arr.push(jsonData);
                 setChatLogs(arr);
             }
-            let sendData = JSON.stringify(jsonData);
+            sendData = JSON.stringify(jsonData);
         }else {
             let jsonData = {
                 user: userName,
@@ -69,7 +69,7 @@ const NavComp = () => {
                 arr.push(jsonData);
                 setChatLogs(arr);
             }
-            let sendData = JSON.stringify(jsonData);
+            sendData = JSON.stringify(jsonData);
         }
         stompClient.send(globalChatSend,{},sendData);
     }
@@ -111,33 +111,8 @@ const NavComp = () => {
 
     return (
         <div className="nav-comp">
-            {/* <nav class="navbar navbar-expand-lg bg-body-tertiary sample-nav">
-                <div class="container-fluid">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link my-nav-link" aria-current="page" href="#">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link my-nav-link" href="#">News</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link my-nav-link" href="#">Video</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link my-nav-link" href="#">Images</a>
-                            </li>
-                        </ul>
-                        <div className="d-flex">
-                            <a href="/login" className="btn btn-outline-light me-2 btn-sample">Login</a>
-                            <a href="/register" className="btn btn-outline-light me-2 btn-sample">Registration</a>
-                        </div>
-                    </div>
-                </div>
-            </nav> */}
+            
+            {/* NAvbar will be here */}
             <nav className="bg-transparent">
                 <div className="max-w-screen-xl px-4 py-3 mx-auto">
                     <div className="flex items-center">
@@ -166,8 +141,6 @@ const NavComp = () => {
                 </div>
             </nav>
 
-
-
             <div className="side-bar">
                 {/* Chat dialogue */}
                 <div className="dialogue-box" id="chat-box" style={{ display: chat }}>
@@ -177,8 +150,8 @@ const NavComp = () => {
                         <ChatRender />
                     </div>
                     <form method="post" onSubmit={onMessageSend}>
-                        <div class="mb-3">
-                            <input type="text" class="form-control my-input" id="exampleInputText1" aria-describedby="textHelp" name="message" />
+                        <div className="mb-3">
+                            <input type="text" className="form-control my-input" id="exampleInputText1" aria-describedby="textHelp" name="message" />
                         </div>
                     </form>
                 </div>

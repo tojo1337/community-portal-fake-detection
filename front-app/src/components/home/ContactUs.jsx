@@ -30,15 +30,15 @@ const ContactUs = () => {
 
                                 <div className="contact-box">
                                     <form>
-                                        <div class="mb-3">
-                                            <label for="exampleInputEmail1" class="form-label">Email address</label>
-                                            <input type="email" class="form-control my-input" id="exampleInputEmail1" aria-describedby="emailHelp" />
+                                        <div className="mb-3">
+                                            <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
+                                            <input type="email" className="form-control my-input" id="exampleInputEmail1" aria-describedby="emailHelp" />
                                         </div>
-                                        <div class="mb-3">
-                                            <label for="exampleInputComplaint" class="form-label">Complains</label>
-                                            <input type='text' class="form-control my-input" id="exampleInputComplaint" />
+                                        <div className="mb-3">
+                                            <label htmlFor="exampleInputComplaint" className="form-label">Complains</label>
+                                            <input type='text' className="form-control my-input" id="exampleInputComplaint" />
                                         </div>
-                                        <button type="submit" class="btn btn-primary sample-btn">Submit</button>
+                                        <button type="submit" className="btn btn-primary sample-btn">Submit</button>
                                     </form>
                                 </div>
 
