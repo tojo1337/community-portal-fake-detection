@@ -33,6 +33,14 @@ const voteForNews = baseUrl+"rate-news";
 
 const wsUrl = "http://localhost:8080/websocket";
 
+const thresholdValue = baseUrl+"get-news-threshold/";
+
+const makeComplain = baseUrl+"comp/"+"make-complain";
+
+const allComplains = baseUrl+"comp/"+"all-complains";
+
+const deleteComp = baseUrl+"comp/"+"delete-complain/";
+
 export {
     fetchAllNews,
     newsRate,
@@ -48,5 +56,9 @@ export {
     delNews,
     newNews,
     userList,
-    voteForNews
+    voteForNews,
+    thresholdValue,
+    makeComplain,
+    allComplains,
+    deleteComp
 }

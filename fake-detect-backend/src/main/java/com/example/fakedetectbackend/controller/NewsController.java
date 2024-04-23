@@ -4,6 +4,7 @@ import com.example.fakedetectbackend.model.enums.Rate;
 import com.example.fakedetectbackend.model.news.NewsBody;
 import com.example.fakedetectbackend.model.news.NewsBodyDto;
 import com.example.fakedetectbackend.model.news.NewsRatings;
+import com.example.fakedetectbackend.model.news.NewsThreshold;
 import com.example.fakedetectbackend.model.others.Sample;
 import com.example.fakedetectbackend.service.JwtService;
 import com.example.fakedetectbackend.service.MyUserDetailsService;
@@ -21,7 +22,6 @@ import java.util.Optional;
 @Log
 @RestController
 @RequestMapping("/api/v1/")
-@CrossOrigin(origins = "http://localhost:3000")
 public class NewsController {
     @Autowired
     private NewsService newsService;
@@ -77,6 +77,20 @@ public class NewsController {
                 NewsRatings
                         .builder()
                         .value(rate)
+                        .build(),
+                HttpStatus.OK
+        );
+    }
+    @GetMapping("get-news-threshold/{newsId}")
+    public ResponseEntity<NewsThreshold> newsThresholdQuery(@PathVariable int newsId){
+        double threshold = newsService.findThresholdById(newsId);
+
+        // Returns 403 forbidden if the resource is not found
+        // Need to catch it when doing it with axios
+        return new ResponseEntity<>(
+                NewsThreshold
+                        .builder()
+                        .threshold(threshold)
                         .build(),
                 HttpStatus.OK
         );

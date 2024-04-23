@@ -78,6 +78,8 @@ const DashBoard = () => {
                                             <input type="file" className="form-control" id="supportingFile" />
                                         </div>
                                         <button type="submit" className="btn btn-dark dashboard-button">Submit</button>
+                                        <div className="pb-2"></div>
+                                        <a href="/logout" className="btn btn-dark dashboard-button">Logout</a>
                                     </form>
                                 </div>
                             </div>

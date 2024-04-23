@@ -24,6 +24,7 @@ public class NewsBodyDto {
     private String messageBody;
     private Date timeStamp;
     private Rate ratings;
+    private double threshold;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<MyUser> user;
 }

@@ -3,14 +3,16 @@ import "./AdminPanel.css";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { delNews, delUser, isAdmid, userList } from "../../static/Api";
+import { allComplains, delNews, delUser, deleteComp, isAdmid, userList } from "../../static/Api";
 import { setNews } from "../../services/News";
 
 const AdminPanel = () => {
     const [userDisplay, setUserDisplay] = useState("block");
     const [newsDisplay, setNewsDisplay] = useState("none");
+    const [compDisplay, setCompDisplay] = useState("none");
     const [newsArr, setNewsArr] = useState([]);
     const [userArr, setUserArr] = useState([]);
+    const [compArr, setCompArr] = useState([]);
 
     const newsList = useSelector(state => state.news.value);
     const bearer = useSelector(state => state.authGuard.bearerToken);
@@ -27,6 +29,7 @@ const AdminPanel = () => {
         let newsItems = [...newsList];
         setNewsArr(newsItems);
         fillUserList(bearer.data);
+        fillComplainList();
     }, []);
 
     const fillUserList = async (tok)=> {
@@ -41,6 +44,10 @@ const AdminPanel = () => {
         }).catch((err)=>{
             console.error(err);
         });
+    }
+
+    const fillComplainList = ()=>{
+        axios.get(allComplains).then(data=>setCompArr(data.data)).catch(err=>console.error(err));
     }
 
     const userDelete = (e, id) => {
@@ -71,6 +78,21 @@ const AdminPanel = () => {
         setNewsArr(temp);
         axios.get(delNews + id,{headers:{"Authorization":"Bearer "+bearer.data}}).catch(err => console.error(err));
         dispatch(setNews(temp));
+    }
+
+    const compDelete = (e, id) => {
+        let arr = [...compArr];
+        let temp = [];
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i].id === id) {
+                continue;
+            } else {
+                temp.push(arr[i]);
+            }
+        }
+        console.log(delUser+id);
+        setUserArr(temp);
+        axios.get(deleteComp+id).catch(err => console.error(err));
     }
 
     const NewsList = () => {
@@ -135,14 +157,53 @@ const AdminPanel = () => {
         }
     }
 
+    const ComplainList = () => {
+        let arr = [...compArr];
+        if (arr.length === 0) {
+            return (
+                <div className="admin-card">
+                    <div className="admin-item">
+                        No complain found
+                    </div>
+                </div>
+            )
+        } else {
+            let retUser = arr.map((data, index) => {
+                return (
+                    <li key={index} className="list-none pb-1" >
+                        <div className="admin-card">
+                            <div className="admin-item">
+                                {data.id}. {data.email} : {data.complain}
+                            </div>
+                            <div className="admin-item">
+                                <button className="btn btn-outline-danger text-white" onClick={(e) => { compDelete(e, data.id) }}>remove complain</button>
+                            </div>
+                        </div>
+                    </li>
+                )
+            });
+            return (
+                <ul className="p-0">{retUser}</ul>
+            )
+        }
+    }
+
     const showUser = () => {
         setNewsDisplay("none");
         setUserDisplay("block");
+        setCompDisplay("none");
     }
 
     const showNews = () => {
         setNewsDisplay("block");
         setUserDisplay("none");
+        setCompDisplay("none");
+    }
+
+    const showComplain = ()=> {
+        setNewsDisplay("none");
+        setUserDisplay("none");
+        setCompDisplay("block");
     }
 
     return (
@@ -153,6 +214,9 @@ const AdminPanel = () => {
                 </li>
                 <li className="nav-item">
                     <button className="nav-link hover:text-gray-200" onClick={showNews}>News</button>
+                </li>
+                <li className="nav-item">
+                    <button className="nav-link hover:text-gray-200" onClick={showComplain}>Complains</button>
                 </li>
             </ul>
             <hr />
@@ -166,6 +230,11 @@ const AdminPanel = () => {
                 {/* Show all the news and perform crud over it */}
                 <div className="admin-news-list admin-block" style={{ display: newsDisplay }}>
                     <NewsList />
+                </div>
+
+                {/* Show all complains in here */}
+                <div className="admin-news-list admin-block" style={{ display: compDisplay }}>
+                    <ComplainList />
                 </div>
             </div>
         </div>

@@ -22,6 +22,8 @@ public class NewsService {
     private NewsRepo newsRepo;
     @Autowired
     private MyUserRepo userRepo;
+    @Autowired
+    private ThresholdService thresholdService;
     /*
     * Need to add the custom logic to map news elements with users
     * So that the news rating can be mapped
@@ -105,10 +107,13 @@ public class NewsService {
                 return false;
             }
         }
+        // The threshold value will be added in here
+        double thresholdValue = thresholdService.getThresholdValue(newsBody.getMessageBody());
         NewsBodyDto news = NewsBodyDto.builder()
                 .title(newsBody.getTitle())
                 .messageBody(newsBody.getMessageBody())
                 .timeStamp(cal.getTime())
+                .threshold(thresholdValue)
                 .build();
         newsRepo.save(news);
         return true;
@@ -173,6 +178,15 @@ public class NewsService {
             NewsBodyDto getNews = news.get();
             newsRepo.delete(getNews);
             return true;
+        }
+    }
+    public double findThresholdById(int newsId){
+        List<NewsBodyDto> li = newsRepo.findAll();
+        Optional<NewsBodyDto> newsOption = li.stream().filter(data->data.getId()==newsId).findAny();
+        if(newsOption.isPresent()){
+            return newsOption.get().getThreshold();
+        }else {
+            return 0.0;
         }
     }
 }

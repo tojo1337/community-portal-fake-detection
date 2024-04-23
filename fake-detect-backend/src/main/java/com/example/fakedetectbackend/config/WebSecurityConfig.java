@@ -47,8 +47,11 @@ public class WebSecurityConfig {
             "/api/v1/token",
             "/api/v1/news-list",
             "/api/v1/get-news-rate/*",
+            "/api/v1/get-news-threshold/*",
             "/api/v1",
             "/websocket",
+            "/websocket/**",
+            "/api/v1/comp/*"
     };
     private final String[] adminRequired = {
             "/api/v1/del-user/*",
@@ -58,7 +61,7 @@ public class WebSecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigSource(){
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("*"));
+        config.setAllowedOrigins(List.of(remoteUrl));
         config.setAllowedMethods(List.of("*"));
         config.setAllowedHeaders(List.of("*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

@@ -1,6 +1,17 @@
+import axios from 'axios';
 import './ContactUs.css';
+import { makeComplain } from '../../static/Api';
 
 const ContactUs = () => {
+    const handleForm = (e)=>{
+        e.preventDefault();
+        const form = e.target;
+        const formData = new FormData(form);
+        const formJson = Object.fromEntries(formData.entries());
+        
+        axios.post(makeComplain,formJson).catch(err=>console.error(err));
+    }
+
     return (
         <div className="contact-us">
             <div className="container">
@@ -29,14 +40,14 @@ const ContactUs = () => {
                                 </div>
 
                                 <div className="contact-box">
-                                    <form>
+                                    <form onSubmit={handleForm}>
                                         <div className="mb-3">
                                             <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-                                            <input type="email" className="form-control my-input" id="exampleInputEmail1" aria-describedby="emailHelp" />
+                                            <input type="email" className="form-control my-input" id="exampleInputEmail1" aria-describedby="emailHelp" name='email' />
                                         </div>
                                         <div className="mb-3">
                                             <label htmlFor="exampleInputComplaint" className="form-label">Complains</label>
-                                            <input type='text' className="form-control my-input" id="exampleInputComplaint" />
+                                            <input type='text' className="form-control my-input" id="exampleInputComplaint" name='complain' />
                                         </div>
                                         <button type="submit" className="btn btn-primary sample-btn">Submit</button>
                                     </form>

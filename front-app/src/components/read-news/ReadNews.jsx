@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom"
 import "./ReadNews.css"
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { newsRate,voteForNews } from "../../static/Api";
+import { newsRate,thresholdValue,voteForNews } from "../../static/Api";
 import { useSelector } from "react-redux";
 import Select from "react-select";
 
@@ -12,6 +12,7 @@ const ReadNews = () => {
     const [scoreVal, setScoreVal] = useState();
     const [news, setNews] = useState({});
     const [rate, setRate] = useState(null);
+    const [threshold, setThreshold] = useState(0);
 
     // Checks if the user is logged in
     const isLoggedIn = useSelector((state) => state.authGuard.isAuthenticated);
@@ -54,6 +55,10 @@ const ReadNews = () => {
                 }
             })
             .catch(err => console.err(err));
+
+        axios.get(thresholdValue+newsId).then(data=>{
+            setThreshold(data.data.threshold);
+        }).catch(err=>console.error(err));
     }, []);
 
     const VotingModule = () => {
@@ -120,6 +125,10 @@ const ReadNews = () => {
                     <hr />
                     <div className="card-item">
                         <p>{news.messageBody}</p>
+                    </div>
+                    <hr />
+                    <div className="card-item">
+                        Percentage of negetivity : {threshold} %
                     </div>
                     <hr />
                     <div className="card-item">

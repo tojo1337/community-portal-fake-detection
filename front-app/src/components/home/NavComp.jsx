@@ -122,7 +122,7 @@ const NavComp = () => {
                                     <a className="nav-link my-nav-link p-2" aria-current="page" href="/">Home</a>
                                 </li>
                                 <li className="nav-item nav-mar">
-                                    <a className="nav-link my-nav-link p-2" href="#">News</a>
+                                    <a className="nav-link my-nav-link p-2" href="/news">News</a>
                                 </li>
                                 <li className="nav-item nav-mar">
                                     <a className="nav-link my-nav-link p-2" href="#">Video</a>
