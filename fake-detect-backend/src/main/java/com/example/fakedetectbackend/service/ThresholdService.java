@@ -5,9 +5,6 @@ import com.example.fakedetectbackend.model.threshold.ResPayload;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.SneakyThrows;
-import org.apache.hc.client5.http.classic.methods.HttpPost;
-import org.apache.hc.core5.http.ContentType;
-import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -17,14 +14,13 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.http.HttpClient;
 
 @Service
 public class ThresholdService {
     @Value("${webhook}")
     private String urlPath;
     @SneakyThrows
-    public double getThresholdValue(String message){
+    public ResPayload getThresholdValue(String message){
         GsonBuilder gb = new GsonBuilder();
         gb.setPrettyPrinting();
         Gson json = gb.create();
@@ -35,7 +31,7 @@ public class ThresholdService {
         con.setDoOutput(true);
         con.connect();
         BufferedWriter out = new BufferedWriter(new OutputStreamWriter(con.getOutputStream()));
-        out.write(json.toJson(new ReqPayload("Hello world here")));
+        out.write(json.toJson(new ReqPayload(message)));
         out.flush();
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
         StringBuilder sb = new StringBuilder();
@@ -44,13 +40,13 @@ public class ThresholdService {
             sb.append(data);
         }
         if(con.getResponseCode()!=200){
-            return 0;
+            return ResPayload.builder().classify("").threshold(0).build();
         }else {
             ResPayload payload = json.fromJson(sb.toString(), ResPayload.class);
             out.close();
             in.close();
             con.disconnect();
-            return payload.getThreshold();
+            return payload;
         }
     }
 }

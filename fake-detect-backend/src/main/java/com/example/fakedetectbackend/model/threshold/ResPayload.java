@@ -8,5 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResPayload {
-    private int threshold;
+    private String classify;
+    private double threshold;
 }

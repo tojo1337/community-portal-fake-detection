@@ -12,7 +12,9 @@ const ReadNews = () => {
     const [scoreVal, setScoreVal] = useState();
     const [news, setNews] = useState({});
     const [rate, setRate] = useState(null);
-    const [threshold, setThreshold] = useState(0);
+    const [classification, setClassification] = useState("");
+    // const [threshold, setThreshold] = useState(0);
+    const [threshold, setThreshold] = useState({});
 
     // Checks if the user is logged in
     const isLoggedIn = useSelector((state) => state.authGuard.isAuthenticated);
@@ -57,6 +59,7 @@ const ReadNews = () => {
             .catch(err => console.err(err));
 
         axios.get(thresholdValue+newsId).then(data=>{
+            console.log(data.data.threshold);
             setThreshold(data.data.threshold);
         }).catch(err=>console.error(err));
     }, []);
@@ -128,7 +131,11 @@ const ReadNews = () => {
                     </div>
                     <hr />
                     <div className="card-item">
-                        Percentage of negetivity : {threshold} %
+                        Classification : {threshold.classify}
+                    </div>
+                    <hr />
+                    <div className="card-item">
+                        Degree of truthness : {threshold.threshold} %
                     </div>
                     <hr />
                     <div className="card-item">

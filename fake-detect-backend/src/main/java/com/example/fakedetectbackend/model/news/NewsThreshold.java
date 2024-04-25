@@ -1,5 +1,6 @@
 package com.example.fakedetectbackend.model.news;
 
+import com.example.fakedetectbackend.model.threshold.ResPayload;
 import lombok.*;
 
 @Data
@@ -8,5 +9,5 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NewsThreshold {
-    private double threshold;
+    private ResPayload threshold;
 }

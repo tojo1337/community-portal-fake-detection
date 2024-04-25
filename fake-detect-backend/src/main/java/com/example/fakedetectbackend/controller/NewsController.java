@@ -6,6 +6,7 @@ import com.example.fakedetectbackend.model.news.NewsBodyDto;
 import com.example.fakedetectbackend.model.news.NewsRatings;
 import com.example.fakedetectbackend.model.news.NewsThreshold;
 import com.example.fakedetectbackend.model.others.Sample;
+import com.example.fakedetectbackend.model.threshold.ResPayload;
 import com.example.fakedetectbackend.service.JwtService;
 import com.example.fakedetectbackend.service.MyUserDetailsService;
 import com.example.fakedetectbackend.service.NewsService;
@@ -83,7 +84,7 @@ public class NewsController {
     }
     @GetMapping("get-news-threshold/{newsId}")
     public ResponseEntity<NewsThreshold> newsThresholdQuery(@PathVariable int newsId){
-        double threshold = newsService.findThresholdById(newsId);
+        ResPayload threshold = newsService.findThresholdById(newsId);
 
         // Returns 403 forbidden if the resource is not found
         // Need to catch it when doing it with axios

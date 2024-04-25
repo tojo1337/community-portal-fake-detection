@@ -3,4 +3,6 @@ lib/*
 include/*
 lib64/*
 pyvenv.cfg
+src/detection_model.py
+src*.csv
 

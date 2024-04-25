@@ -1,4 +1,17 @@
-Use the test branch to test all the implementation related changes.
-You can also add different branches based on what you are doing i.e. Login page, Registration page etc.
+Please change the database configurations before starting the java backend server for deployment
+applications.property file is the place where the configurations for the backend exists.
+Changing it will cause the entire backend not work
+The following sections should be changed : 
 
-Store the credentials in sessionStorage instead of localStorage.
+spring.datasource.url=jdbc:mariadb://localhost:3306/fake_detect
+spring.datasource.username=tojo
+spring.datasource.password=chandril
+
+Need to package the entire java application into a jar file before hosting(good practices).
+Command to make jar : mvn package
+
+I don't know much about javascript but I believe that the given folder will work anywhere as long as node.js exists since I haven't removed the node_modules.
+
+The flask server is not responding. There is no way to understand if it is because of slow execution of the model or not. My computer is slow and I don't have any way to find if it is a bug or my computer. I have tried my best to fix it but it did not work.
+
+It will be adviced to check it first and make it sure if it is but or some other problem.

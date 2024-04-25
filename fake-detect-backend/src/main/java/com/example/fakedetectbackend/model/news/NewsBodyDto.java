@@ -1,6 +1,7 @@
 package com.example.fakedetectbackend.model.news;
 
 import com.example.fakedetectbackend.model.enums.Rate;
+import com.example.fakedetectbackend.model.threshold.ResPayload;
 import com.example.fakedetectbackend.model.user.MyUser;
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,6 +25,7 @@ public class NewsBodyDto {
     private String messageBody;
     private Date timeStamp;
     private Rate ratings;
+    private String classification;
     private double threshold;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<MyUser> user;

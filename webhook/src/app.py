@@ -1,5 +1,6 @@
 import model
 from flask import Flask, request,jsonify
+from waitress import serve
 
 app = Flask(__name__)
 
@@ -12,6 +13,7 @@ def threshold_placer():
     content = request.json
     data = content["data"]
     val = model.threshold_value_placer(data)
-    return jsonify({"threshold":val})
+    return jsonify(val)
 
-app.run()
+if __name__=="__main__":
+    serve(app,host="0.0.0.0",port=5000)

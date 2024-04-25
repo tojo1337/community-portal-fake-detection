@@ -3,6 +3,7 @@ package com.example.fakedetectbackend.service;
 import com.example.fakedetectbackend.model.enums.Rate;
 import com.example.fakedetectbackend.model.news.NewsBody;
 import com.example.fakedetectbackend.model.news.NewsBodyDto;
+import com.example.fakedetectbackend.model.threshold.ResPayload;
 import com.example.fakedetectbackend.model.user.MyUser;
 import com.example.fakedetectbackend.repo.MyUserRepo;
 import com.example.fakedetectbackend.repo.NewsRepo;
@@ -108,12 +109,13 @@ public class NewsService {
             }
         }
         // The threshold value will be added in here
-        double thresholdValue = thresholdService.getThresholdValue(newsBody.getMessageBody());
+        ResPayload thresholdValue = thresholdService.getThresholdValue(newsBody.getMessageBody());
         NewsBodyDto news = NewsBodyDto.builder()
                 .title(newsBody.getTitle())
                 .messageBody(newsBody.getMessageBody())
                 .timeStamp(cal.getTime())
-                .threshold(thresholdValue)
+                .classification(thresholdValue.getClassify())
+                .threshold(thresholdValue.getThreshold())
                 .build();
         newsRepo.save(news);
         return true;
@@ -180,13 +182,17 @@ public class NewsService {
             return true;
         }
     }
-    public double findThresholdById(int newsId){
+    public ResPayload findThresholdById(int newsId){
         List<NewsBodyDto> li = newsRepo.findAll();
         Optional<NewsBodyDto> newsOption = li.stream().filter(data->data.getId()==newsId).findAny();
         if(newsOption.isPresent()){
-            return newsOption.get().getThreshold();
+            return ResPayload
+                    .builder()
+                    .classify(newsOption.get().getClassification())
+                    .threshold(newsOption.get().getThreshold())
+                    .build();
         }else {
-            return 0.0;
+            return ResPayload.builder().classify("").threshold(0).build();
         }
     }
 }
